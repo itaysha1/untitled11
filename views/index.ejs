@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+  <style>
+    body {
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoDbciqLciX6ALu9tAngLHwwi07yOIX5Es9g&usqp=CAU');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+  </style>
+
+  <script src="javascripts/itay.js"></script>1
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>Four exercise</title>
+</head>
+
+<body>
+
+<center>
+  <h1><%= title %></h1>
+  <br><br><br><br><br><br><br><br><br>
+
+  <form action="/register" method="post" id="register">
+    <label>First name:</label>
+    <input type="text" name="firstname" id="firstname">
+    <div class="text-danger errormessage"></div>
+    <br/><br/><br/>
+    <label>Last name:</label>
+    <input type="text" name="lastname" id="lastname">
+    <div class="text-danger errormessage"></div>
+    <br/><br/><br/>
+    <label>Email: </label>
+    <input type="text" name="email" id="email">
+    <div class="text-danger errormessage"></div>
+    <br/><br/><br/>
+    <input type="submit" value="Register"><br/><br/><br/><br/><br/><br/><br/><br/>
+  </form>
+
+  <form action="/login" method="post" id="login">
+    <input type="submit" value="login"><br/><br/>
+  </form>
+
+
+</center>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+</html>
