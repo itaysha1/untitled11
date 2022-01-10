@@ -279,25 +279,11 @@ const savePictureModule = (function () {
         }
 
         toHtmlCard() {
-            return `
-                <li>
+            return `<li id = ${this.id_pic}>
+                <button type="button" class="btn-close" aria-label="Close" id = ${this.id_pic}></button>           
                 <a href=${this.img_src} target="_blank">Image id: ${this.id_pic}</a>
                 <p>Earth date:${this.land_date}, Sol:${this.sol_num}, Camera:${this.camera_take}</p>
-                </li>
-            `;
-        }
-    }
-    classes.ListSavePicture = class ListSavePicture {
-        constructor() {
-            this.list = [];
-        }
-
-        add(pic) {
-            this.list.push(pic);
-        }
-
-        search(what) {
-            return this.list.find((td) => td.id_pic === what) !== undefined;
+                </li>`;
         }
     }
     return classes;
@@ -312,9 +298,6 @@ const savePictureModule = (function () {
     let result = null;
     let request = null;
     let savePictureEl = null;
-
-    // save picture array
-    let savePictureMod = new savePictureModule.ListSavePicture();
 
     /**
      * function that set massage to user in a case that no images found
@@ -382,6 +365,41 @@ const savePictureModule = (function () {
         }
     }
 
+    const deletePicture = () => {
+        for (let v of savePictureEl.childNodes)
+            if (window.event.target.id === v.id)
+                v.remove();
+
+        fetch("api/delete", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "id" : window.event.target.id,
+                "email" : document.getElementById('email').value
+            })
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            if (data.login === false)
+                document.getElementById("logout").submit();
+        })
+            .catch(function (err) {
+                alert('servers are not available right now, please try again later');
+            })
+    }
+
+    const attachListenerDelete = () => {
+
+        for (const b of document.getElementsByClassName("btn-close")) {
+            b.addEventListener('click', () => {
+                deletePicture();
+            });
+        }
+    };
+
+
     /**
      * handle with user push save button
      */
@@ -389,18 +407,62 @@ const savePictureModule = (function () {
         let id = window.event.target.id;
         let newID = parseInt(id);
         const searchPictures = request.getPictures();
-        if (!savePictureMod.search(newID)) {
             for (const r of searchPictures)
                 if (newID === r.id) {
                     let new_pic = new savePictureModule.savePicture(r.img_src, r.earth_date, r.id, r.sol, r.camera.name);
-                    savePictureMod.add(new_pic);
-                    savePictureEl.innerHTML += new_pic.toHtmlCard();
+                    savePictureInServerClient(new_pic, document.getElementById('email').value);
                 }
-        }
-        else
-        {
-            alert('The image is already saved.');
-        }
+    }
+
+    function savePictureInServerClient(pic, email) {
+        fetch("api/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "object" : pic,
+                "email" : email
+            })
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            if (data.login === false)
+                document.getElementById("logout").submit();
+            else if (data.flag)
+            {
+                savePictureEl.innerHTML +=pic.toHtmlCard();
+                attachListenerDelete();
+            }
+            else
+                alert('THis image already saved');
+        })
+            .catch(function (err) {
+                alert('servers are not available right now, please try again later');
+            })
+    }
+
+    function clearList()
+    {
+        savePictureEl.innerHTML = '';
+
+        fetch("api/clear", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "email" : document.getElementById('email').value
+            })
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            if (data.login === false)
+                document.getElementById("logout").submit();
+        })
+            .catch(function (err) {
+                alert('servers are not available right now, please try again later');
+            })
     }
 
     /**
@@ -424,6 +486,7 @@ const savePictureModule = (function () {
         request.sendRequestAndGetObject(attachListener, setNoImagesFounded);
     }
 
+
     document.addEventListener('DOMContentLoaded', function () {
 
         dateInput = document.getElementById("date");
@@ -440,6 +503,14 @@ const savePictureModule = (function () {
             }
         });
 
+        for (const b of document.getElementsByClassName("btn-close")) {
+            b.addEventListener('click', () => {
+                deletePicture();
+            });
+        }
+
         document.getElementById('reset').addEventListener('click', clearForm);
+
+        document.getElementById('clearall').addEventListener('click', clearList);
     });
 })();

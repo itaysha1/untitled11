@@ -2,14 +2,12 @@ var express = require('express');
 var router = express.Router();
 var controller = require('../Controller/controller');
 
-router.post('/register', (req, res, next) => {
-    let resource = {flag : true};
+router.post('/register', controller.checkEmailExist);
 
-    if (!controller.checkEmail(req.body.currEmail))
-        resource.flag = false;
+router.post('/save', controller.savePicForUser);
 
-    res.json(resource);
-});
+router.post('/delete', controller.deletePicForUser);
 
+router.post('/clear', controller.deleteAll);
 
 module.exports = router;

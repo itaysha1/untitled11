@@ -1,15 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 
-    <style>
-        body {
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoDbciqLciX6ALu9tAngLHwwi07yOIX5Es9g&usqp=CAU');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        }
-    </style>
 
     <script src="javascripts/oren.js"></script>1
 
@@ -24,7 +17,7 @@
 <body>
 
 <center>
-    <h1><%= title %></h1>
+    <h1 id="title"><%= title %></h1>
     <br><br><br><br><br><br><br><br><br>
 
     <form action="/register/password" method="post" id="password1">
@@ -37,7 +30,7 @@
         <div class="text-danger errormessage"></div>
         <input type=“password” name=email value="<%=email%>" hidden>
         <br/><br/><br/>
-        <input type="submit" value="Confirm"><br/><br/><br/><br/><br/><br/><br/><br/>
+        <input type="submit" value="Confirm" id="confirm-btn"><br/><br/><br/><br/><br/><br/><br/><br/>
     </form>
 </center>
 

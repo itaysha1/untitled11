@@ -1,15 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="/stylesheets/style.css">
 
-  <style>
-    body {
-      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoDbciqLciX6ALu9tAngLHwwi07yOIX5Es9g&usqp=CAU');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-    }
-  </style>
 
   <script src="javascripts/itay.js"></script>1
 
@@ -24,7 +17,7 @@
 <body>
 
 <center>
-  <h1><%= title %></h1>
+  <h1 id="title"><%= title %></h1>
   <br><br><br><br><br><br><br><br><br>
 
   <form action="/register" method="post" id="register">
@@ -40,11 +33,11 @@
     <input type="text" name="email" id="email">
     <div class="text-danger errormessage"></div>
     <br/><br/><br/>
-    <input type="submit" value="Register"><br/><br/><br/><br/><br/><br/><br/><br/>
+    <input type="submit" value="Register" id="register-btn"><br/><br/><br/><br/><br/><br/><br/><br/>
   </form>
 
-  <form action="/login" method="post" id="login">
-    <input type="submit" value="login"><br/><br/>
+  <form action="/login" method="post" id="login" >
+    <input type="submit" value="login" id="login-btn"><br/><br/>
   </form>
 
 

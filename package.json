@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "body-parser": "^1.19.1",
     "cookie-parser": "~1.4.4",
     "cookieparser": "^0.1.0",
     "cookies": "^0.8.0",
@@ -14,6 +15,10 @@
     "express": "~4.16.1",
     "express-session": "^1.17.2",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15",
+    "sequelize": "^6.12.5",
+    "sequelize-cli": "^6.3.0",
+    "sqlite3": "^5.0.2"
   }
 }

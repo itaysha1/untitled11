@@ -3,16 +3,9 @@ var cookieParser = require('cookies');
 var router = express.Router();
 const keys = ['keyboard cat'];
 var controller = require('../Controller/controller');
-
-
-
-
-
+const db = require('../models');
 
 router.post('/', function(req, res, next) {
-
-
-
     const cookies = new cookieParser(req, res, { keys: keys })
     const lastVisit = cookies.get('LastVisit', { signed: true })
 
@@ -31,10 +24,15 @@ router.post('/password', function(req, res, next) {
     if (!lastVisit)
         res.redirect('/')
     else
-        controller.pushEmail({Email : req.body.email , Password : req.body.passone});
-        res.redirect('/login');
+    {
+        const email = req.body.email;
+        const password = req.body.passone;
+        return db.Contact.create({email, password})
+            .then((contact) =>   res.redirect('/login'))
+            .catch((err) => {
+            })
+    }
 });
-
 
 
 

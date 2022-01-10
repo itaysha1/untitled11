@@ -68,14 +68,14 @@ const validatorModule = (function () {
 
     function sendAjaxOk()
     {
-        let currEmail = email.value.trim().toLowerCase();
+        let emailone = email.value.trim().toLowerCase();
             fetch("api/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    "currEmail" : currEmail
+                    "email" : emailone
                 })
             }).then(function(response) {
                 return response.json();

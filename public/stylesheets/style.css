@@ -1,8 +1,48 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 30px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url('https://i.kinja-img.com/gawker-media/image/upload/c_fit,f_auto,g_center,pg_1,q_60,w_965/jhbo0hqxkonxqkbfcpey.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 a {
   color: #00B7FF;
+}
+
+#title {
+  color:black;
+  position:center;
+}
+
+#register, #password1, #login, #searchform {
+  color:black;
+  font-family: times;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#passone, #passtwo, #email, #password, #lastname, #firstname {
+  padding: 4px 10px;
+  margin: 4px 0;
+  border: 2px solid darkblue;
+  border-radius: 8px;
+}
+
+#login-btn, #confirm-btn, #register-btn, #modal{
+  border-radius: 8px;
+  background-color:darkblue;
+  color:darkgray;
+  border: none;
+  padding: 5px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: times;
+  font-size: 20px;
+}
+
+form {
+  text-align: center;
 }

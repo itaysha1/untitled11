@@ -21,10 +21,9 @@
 
     const setErrorMassage = (element) => {
         let errorElement = element.nextElementSibling;
-        errorElement.innerHTML = 'input required here' ;
+        errorElement.innerHTML = 'input required here';
         element.classList.add("is-invalid");
     }
-
 
     const restartErrorMassage = (element) => {
         document.querySelectorAll(".is-invalid").forEach((e) => e.classList.remove("is-invalid"));
