@@ -2,13 +2,18 @@
     let email = null;
     let pass = null;
 
+    /**
+     * This function checks the validation of the user's input in case it's empty. If it's not empty, then it'll
+     * send the input info to the server.
+     * @param event
+     */
     function validatePasswordAndSendToServer(event)
     {
         event.preventDefault();
         restartErrorMassage();
         if ((email.value.trim() !== '') && (pass.value.trim() !== ''))
             document.getElementById("login").submit();
-        if (email.value.trim() === '' && pass.value.trim() === '')
+        else if (email.value.trim() === '' && pass.value.trim() === '')
         {
             setErrorMassage(email);
             setErrorMassage(pass);

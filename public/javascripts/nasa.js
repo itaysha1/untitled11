@@ -365,23 +365,23 @@ const savePictureModule = (function () {
         }
     }
 
+    /**
+     * this function sends a api request to the server to delete a photo and receives an answer and will
+     * do as needed.
+     */
     const deletePicture = () => {
+        document.getElementById("test").innerHTML="<img src='images/loading-buffering.gif'>";
         for (let v of savePictureEl.childNodes)
             if (window.event.target.id === v.id)
                 v.remove();
 
-        fetch("api/delete", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "id" : window.event.target.id,
-                "email" : document.getElementById('email').value
-            })
+        document.getElementById("test").innerHTML="<img src='images/loading-buffering.gif'>";
+        fetch(`api/clear?email=${document.getElementById('email').value}&id=${window.event.target.id}`, {
+            method: "DELETE",
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
+            document.getElementById("test").innerHTML="";
             if (data.login === false)
                 document.getElementById("logout").submit();
         })
@@ -414,7 +414,13 @@ const savePictureModule = (function () {
                 }
     }
 
+    /**
+     * this function requests an api request to save a photo and receives an answer and will as needed.
+     * @param pic
+     * @param email
+     */
     function savePictureInServerClient(pic, email) {
+        document.getElementById("test").innerHTML="<img src='images/loading-buffering.gif'>";
         fetch("api/save", {
             method: "POST",
             headers: {
@@ -427,6 +433,7 @@ const savePictureModule = (function () {
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
+            document.getElementById("test").innerHTML="";
             if (data.login === false)
                 document.getElementById("logout").submit();
             else if (data.flag)
@@ -442,21 +449,20 @@ const savePictureModule = (function () {
             })
     }
 
+    /**
+     * sends an api request to the server to delete all the photos of the user, receives an answer and will act
+     * as needed.
+     */
     function clearList()
     {
-        savePictureEl.innerHTML = '';
-
-        fetch("api/clear", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "email" : document.getElementById('email').value
-            })
+        document.getElementById("test").innerHTML="<img src='images/loading-buffering.gif'>";
+        fetch(`api/clear?email=${document.getElementById('email').value.trim()}`, {
+            method: "DELETE",
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
+            document.getElementById("test").innerHTML="";
+            savePictureEl.innerHTML = '';
             if (data.login === false)
                 document.getElementById("logout").submit();
         })

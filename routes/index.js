@@ -11,4 +11,6 @@ router.get('/login', controller.loginAfterSignIn);
 
 router.post('/nasa', controller.checkLoginToNasaPage);
 
+router.get('/nasa', controller.showHomePage);
+
 module.exports = router;

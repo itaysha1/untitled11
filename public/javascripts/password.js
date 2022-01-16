@@ -2,15 +2,17 @@
     let passone = null;
     let passtwo = null;
 
-function validateAndSend(event)
+    /**
+     * a function that checks if the passwords are equal and in the valid format, if correct it will send the info
+     * to the server and if not will send an error message.
+     * @param event
+     */
+    function validateAndSend(event)
 {
     event.preventDefault();
     restartErrorMassage();
     if (validateForm())
-    {
-        console.log(1);
         document.getElementById('password1').submit();
-    }
 }
 
     const restartErrorMassage = (element) => {
@@ -19,9 +21,9 @@ function validateAndSend(event)
     }
 
     const validateForm = () => {
-        if (passone.value === passtwo.value)
+        if (passone.value.trim() === passtwo.value.trim())
         {
-            if (passone.value.length >= 8)
+            if (passone.value.trim().length >= 8)
                 return true;
             else
                 setErrorMassagePass('The password must contain at least 8 digits letters or signals');
@@ -44,6 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
     passone = document.getElementById('passone');
     passtwo = document.getElementById('passtwo');
 
-    document.getElementById("login").addEventListener("submit", validateAndSend);
+    document.getElementById("password1").addEventListener("submit", validateAndSend);
 });
 })();

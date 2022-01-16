@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * A modal that is in charge of the validations.
+ * @type {{isOnlyLetters: (function(*=): {isValid: boolean, message: string}), isInValidEmail: (function(*): {isValid: *, message: string}), isEmpty: (function(*): {isValid, message: string})}}
+ */
 const validatorModule = (function () {
 
     const isEmpty = function (str) {
@@ -40,7 +44,7 @@ const validatorModule = (function () {
 
     const validateInput = (inputElement, validateFunc) => {
         let errorElement = inputElement.nextElementSibling; // the error message div
-        let v = validateFunc(inputElement.value); // call the validation function
+        let v = validateFunc(inputElement.value.trim()); // call the validation function
         errorElement.innerHTML = v.isValid ? '' : v.message; // display the error message
         v.isValid ? inputElement.classList.remove("is-invalid") : inputElement.classList.add("is-invalid");
         return v.isValid;
@@ -65,18 +69,14 @@ const validatorModule = (function () {
     }
 
 
-
+    /**
+     * This function sends a api request to the server to check if the email exists in the system and will receive
+     * a message depending on if the email is valid or not.
+     */
     function sendAjaxOk()
     {
         let emailone = email.value.trim().toLowerCase();
-            fetch("api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "email" : emailone
-                })
+            fetch(`api/register?email=${emailone}` , {method:'GET'
             }).then(function(response) {
                 return response.json();
             }).then(function(data) {

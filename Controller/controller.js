@@ -1,8 +1,17 @@
 const db = require('../models');
 
+
+/**
+ * this is an api request from the client which checks if the email is in the system.
+ * returns a json which says if the email exists or not.
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<Model[]>}
+ */
 exports.checkEmailExist = (req, res, next) => {
     let resource = {flag : true};
-    let email = req.body.email;
+    let email = req.query.email;
 
     return db.Contact.findAll({where: {email}})
         .then((contacts) =>
@@ -16,30 +25,57 @@ exports.checkEmailExist = (req, res, next) => {
             }
         })
         .catch((err) => {
-            console.log(1);
+            res.redirect('/')
         });
 }
 
+/**
+ * this is a request that when it gets to route '/' then it returns a html page.
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.showHomePage = (req,res,next) => {
     res.render('index', { title: 'Register' });
 }
 
+/**
+ * this is a request that when it gets to route '/login' from a post request and returns a html page.
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.loginFromHomePage = (req,res,next) => {
     req.session.loginSuccess = false;
     res.render('login', { title: 'Login' });
 }
 
+/**
+ * this is a request that when it gets to route '/login' from a get request and returns a html page.
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.loginAfterSignIn = (req,res,next) => {
-    if (req.session.LoginFailed)
-    {
-        req.session.LoginFailed = false;
+    if (req.session.signIn)
+        res.render('login', { title: 'Congratulation, now login' });
+    else if(req.session.failLogIn)
         res.render('login', { title: 'Your email or password incorrect' });
-    }
-    res.render('login', { title: 'Congratulation, now login' });
+    else
+        res.render('login', { title: 'Login' });
 }
 
+/**
+ * this is a request that when it gets to route '/nasa' from a post request and checks if the user is on the system,
+ * and if so it will send him to the nasa html page, and if not then an error message will come up on the screen.
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<Model[]>}
+ */
 exports.checkLoginToNasaPage = (req,res,next) => {
-
+    req.session.signIn = false;
+    req.session.failLogIn = false;
     const email = req.body.email;
     const password = req.body.password;
 
@@ -48,22 +84,34 @@ exports.checkLoginToNasaPage = (req,res,next) => {
         {
             if (contacts.length === 0)
             {
-                req.session.LoginFailed = true;
+                req.session.failLogIn = true;
                 res.redirect('/login');
             }
-            req.session.loginSuccess = true;
+            else
+            {
+                req.session.loginSuccess = true;
 
-            return db.Photos.findAll({email})
-                .then((contact) => {
-                    res.render('nasa', {user : req.body.email, email : req.body.email, photos: contact});
-                })
-                .catch((err) => {
-                })
-        })
+                return db.Photos.findAll({email})
+                    .then((contact) => {
+                        res.render('nasa', {user : req.body.email, email : req.body.email, photos: contact});
+                    })
+                    .catch((err) => {
+                        res.redirect('/');
+                    })
+            }
+            })
         .catch((err) => {
         });
 }
 
+/**
+ * this is an api request to save a photo and receives in the request the photo, checks in the database if it exists
+ * and if it does not, then it will add it and return a message to the user if it was added.
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<Model[]>}
+ */
 exports.savePicForUser = (req,res,next) => {
 
     let resource = {flag : false , login : true};
@@ -92,6 +140,8 @@ exports.savePicForUser = (req,res,next) => {
                         res.json(resource);
                     })
                     .catch((err) => {
+                        resource.login = false;
+                        res.json(resource);
                     })
             }
             else
@@ -101,6 +151,13 @@ exports.savePicForUser = (req,res,next) => {
         });
 }
 
+/**
+ * receives an api request and receives the photo that needs to be deleted, deletes it and sends a message to the user.
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<T>}
+ */
 exports.deletePicForUser = (req,res,next) => {
     let resource = {login : true};
 
@@ -110,8 +167,8 @@ exports.deletePicForUser = (req,res,next) => {
         res.json(resource);
     }
 
-    const email = req.body.email;
-    const id_pic = req.body.id;
+    const email = req.query.email;
+    const id_pic = req.query.id;
 
     return db.Photos.findOne({where: {email, id_pic}})
         .then((contact) => {
@@ -119,9 +176,18 @@ exports.deletePicForUser = (req,res,next) => {
             res.json(resource);
         })
         .catch((err) => {
+            resource.login = false;
+            res.json(resource);
         })
 }
 
+/**
+ * receives an api request to delete all photos of the user and returns success or failure.
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<T>}
+ */
 exports.deleteAll = (req,res,next) => {
     let resource = {login : true};
 
@@ -131,12 +197,14 @@ exports.deleteAll = (req,res,next) => {
         res.json(resource);
     }
 
-    const email = req.body.email;
+    const email = req.query.email;
 
     return db.Photos.destroy({where: {email}})
         .then((contact) => {
             res.json(resource);
         })
         .catch((err) => {
+            resource.login = false;
+            res.json(resource);
         })
 }

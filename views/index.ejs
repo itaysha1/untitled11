@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 
 
-  <script src="javascripts/itay.js"></script>1
+  <script src="javascripts/register.js"></script>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,23 +21,23 @@
   <br><br><br><br><br><br><br><br><br>
 
   <form action="/register" method="post" id="register">
-    <label>First name:</label>
+    <label id="first">First name:</label>
     <input type="text" name="firstname" id="firstname">
-    <div class="text-danger errormessage"></div>
+    <div id="err-msg" class="text-danger errormessage"></div>
     <br/><br/><br/>
-    <label>Last name:</label>
+    <label id="second">Last name:</label>
     <input type="text" name="lastname" id="lastname">
-    <div class="text-danger errormessage"></div>
+    <div id="err-msg" class="text-danger errormessage"></div>
     <br/><br/><br/>
-    <label>Email: </label>
+    <label id="third">Email: </label>
     <input type="text" name="email" id="email">
-    <div class="text-danger errormessage"></div>
+    <div id="err-msg" class="text-danger errormessage"></div>
     <br/><br/><br/>
-    <input type="submit" value="Register" id="register-btn"><br/><br/><br/><br/><br/><br/><br/><br/>
+    <input type="submit" value="Register" id="register-btn"><br/><br/><br/><br/>
   </form>
 
   <form action="/login" method="post" id="login" >
-    <input type="submit" value="login" id="login-btn"><br/><br/>
+    <input type="submit" value="Login" id="login-btn"><br/><br/>
   </form>
 
 

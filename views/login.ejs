@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="/stylesheets/style.css">
 
-    <script src="javascripts/itayoren.js"></script>
+    <script src="javascripts/login.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,13 +20,13 @@
     <br><br><br><br><br><br><br><br><br>
 
     <form action="/nasa" method="post" id="login">
-        Enter tour email
+        <label id="first">Enter your email</label>
         <input type="text" name="email" id="email">
-        <div class="text-danger errormessage"></div>
+        <div id="err-msg" class="text-danger errormessage"></div>
         <br/><br/><br/>
-        <label>Enter your password</label>
+        <label id="second">Enter your password</label>
         <input type="password" name="password" id="password">
-        <div class="text-danger errormessage"></div>
+        <div id="err-msg2" class="text-danger errormessage"></div>
         <br/><br/><br/>
         <input type="submit" value="Confirm" id="confirm-btn"><br/><br/><br/><br/><br/><br/><br/><br/>
     </form>

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 
 
-    <script src="javascripts/oren.js"></script>1
+    <script src="javascripts/password.js"></script>1
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,13 +21,13 @@
     <br><br><br><br><br><br><br><br><br>
 
     <form action="/register/password" method="post" id="password1">
-        Password
+        <label id="first">Password</label>
         <input type="password" name="passone" id="passone">
-        <div class="text-danger errormessage"></div>
+        <div id="err-msg" class="text-danger errormessage"></div>
         <br/><br/><br/>
-        <label>Confirm password</label>
+        <label id="second">Confirm password</label>
         <input type="password" name="passtwo" id="passtwo">
-        <div class="text-danger errormessage"></div>
+        <div id="err-msg" class="text-danger errormessage"></div>
         <input type=“password” name=email value="<%=email%>" hidden>
         <br/><br/><br/>
         <input type="submit" value="Confirm" id="confirm-btn"><br/><br/><br/><br/><br/><br/><br/><br/>
